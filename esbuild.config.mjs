@@ -15,7 +15,7 @@ esbuild
 		banner: {
 			js: banner,
 		},
-		entryPoints: ["src/main.ts"],
+		entryPoints: ["src/index.ts"],
 		bundle: true,
 		external: [
 			"obsidian",
