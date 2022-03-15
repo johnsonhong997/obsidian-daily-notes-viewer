@@ -6,12 +6,14 @@ export interface ViewerSettings {
 	Heading: string;
 	Maximum: number;
 	Lines: number;
+	NewLeaf: boolean;
 }
 
 export const DEFAULT_SETTINGS: ViewerSettings = {
 	Heading: "",
 	Maximum: 30,
 	Lines: 0,
+	NewLeaf: false,
 };
 
 export class ViewerSettingTab extends PluginSettingTab {
@@ -77,6 +79,18 @@ export class ViewerSettingTab extends PluginSettingTab {
 					.setValue(String(this.plugin.settings.Lines))
 					.onChange((value) => {
 						this.plugin.settings.Lines = parseInt(value);
+						this.plugin.saveSettings();
+					})
+			);
+
+		new Setting(containerEl)
+			.setName(t("Open in New Pane"))
+			.setDesc(t("Open viewer file in a new pane. (Default: OFF)"))
+			.addToggle((toggle) =>
+				toggle
+					.setValue(this.plugin.settings.NewLeaf)
+					.onChange((value) => {
+						this.plugin.settings.NewLeaf = value;
 						this.plugin.saveSettings();
 					})
 			);

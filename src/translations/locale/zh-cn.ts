@@ -14,4 +14,7 @@ export default {
 	"Size of Spacing": "日记的间距大小",
 	"The size of spacing between daily notes. (Default: 0)":
 		"日记的间距大小（默认：0）",
+	"Open in New Pane": "在新窗格中打开",
+	"Open viewer file in a new pane. (Default: OFF)":
+		"在新窗格中打开 Viewer 文件（默认：关闭）",
 };

@@ -16,4 +16,7 @@ export default {
 	"Size of Spacing": "Size of Spacing",
 	"The size of spacing between daily notes. (Default: 0)":
 		"The size of spacing between daily notes. (Default: 0)",
+	"Open in New Pane": "Open in New Pane",
+	"Open viewer file in a new pane. (Default: OFF)":
+		"Open viewer file in a new pane. (Default: OFF)",
 };
