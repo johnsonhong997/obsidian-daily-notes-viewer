@@ -6,15 +6,18 @@ It can help you review your daily notes like in roam research.
 
 ### Demo
 
-![demo](img/demo.gif)
+![demo](img/demo.png)
 
 ### Note
 
 -   Please make sure that the daily notes plugin in the core plugin has been enabled.
+-   The viewer file will be created automatically when enabling the plugin.
+-   The viewer file will be updated automatically when creating daily notes or changing settings.
 
 ### How to use
 
--   Click the ribbon icon of "Viewer" or execute the command of "Open Viewer"
+-   Enable the plugin.
+-   Click the ribbon icon to jump to the viewer file.
 
 ### Thanks
 
