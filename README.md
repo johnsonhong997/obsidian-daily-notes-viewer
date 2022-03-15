@@ -19,3 +19,5 @@ It can help you review your daily notes like in roam research.
 ### Thanks
 
 -   Thanks to [Liam Cain](https://github.com/liamcain) for the [Obsidian Daily Notes interface](https://github.com/liamcain/obsidian-daily-notes-interface).
+
+-   Thanks to [Boninall](https://github.com/Quorafind) for adding some features.
