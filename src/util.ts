@@ -43,11 +43,9 @@ export const createOrUpdateViewer = async (
 	let viewer = app.vault.getAbstractFileByPath("Viewer.md") as TFile;
 	if (viewer === null) {
 		await app.vault.create("Viewer.md", `\n${linksText}`);
-		new Notice(t("Viewer created"));
 		return;
 	} else {
 		await app.vault.modify(viewer, `\n${linksText}`);
-		new Notice(t("Viewer updated"));
 		return;
 	}
 };

@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-daily-notes-viewer",
-	"version": "0.1.3",
+	"version": "0.1.4",
 	"description": "Help you to review your daily notes like in roam research.",
 	"main": "main.js",
 	"scripts": {

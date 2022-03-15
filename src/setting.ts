@@ -49,11 +49,12 @@ export class ViewerSettingTab extends PluginSettingTab {
 			.setDesc(t("Display content after heading. (Default: Dispaly all)"))
 			.addText((text) =>
 				text
-					.setPlaceholder("Daily Notes")
+					.setPlaceholder(t("Enter a title"))
 					.setValue(this.plugin.settings.Heading)
 					.onChange(async (value) => {
 						this.plugin.settings.Heading = value;
 						this.applySettingsUpdate();
+						this.plugin.updateFileOnSettingChange();
 					})
 			);
 
@@ -62,11 +63,12 @@ export class ViewerSettingTab extends PluginSettingTab {
 			.setDesc(t("The quantity of daily notes to display. (Default: 30)"))
 			.addText((text) =>
 				text
-					.setPlaceholder("30")
-					.setValue(String(this.plugin.settings.Maximum))
-					.onChange((value) => {
+					.setPlaceholder("0")
+					.setValue((this.plugin.settings.Maximum || 0) + "")
+					.onChange(async (value) => {
 						this.plugin.settings.Maximum = parseInt(value);
 						this.plugin.saveSettings();
+						this.plugin.updateFileOnSettingChange();
 					})
 			);
 
@@ -76,10 +78,11 @@ export class ViewerSettingTab extends PluginSettingTab {
 			.addText((text) =>
 				text
 					.setPlaceholder("0")
-					.setValue(String(this.plugin.settings.Lines))
-					.onChange((value) => {
+					.setValue((this.plugin.settings.Lines || 0) + "")
+					.onChange(async (value) => {
 						this.plugin.settings.Lines = parseInt(value);
 						this.plugin.saveSettings();
+						this.plugin.updateFileOnSettingChange();
 					})
 			);
 

@@ -21,7 +21,7 @@ export default class ViewerPlugin extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new ViewerSettingTab(this.app, this));
 		this.registerFileMonitor();
-		this.createFileAfterOnLoad();
+		this.createFileOnLoad();
 
 		this.addRibbonIcon(
 			"calendar-glyph",
@@ -69,7 +69,7 @@ export default class ViewerPlugin extends Plugin {
 	}
 
 	// 当开启插件后，自动创建 Viewer 文件
-	private async createFileAfterOnLoad() {
+	private async createFileOnLoad() {
 		await createOrUpdateViewer(this.app, this.settings);
 	}
 
@@ -80,6 +80,11 @@ export default class ViewerPlugin extends Plugin {
 			return;
 		}
 		await this.app.vault.adapter.remove("Viewer.md");
+	}
+
+	// 当设置改变时，自动更新 Viewer 内容
+	async updateFileOnSettingChange() {
+		await createOrUpdateViewer(this.app, this.settings);
 	}
 
 	// 支持监控文件变化，自动更新 Viewer 内容
