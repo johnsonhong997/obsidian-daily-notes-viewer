@@ -11,8 +11,9 @@ import {
 	TFile,
 } from "obsidian";
 import { ViewerSettingTab, DEFAULT_SETTINGS, ViewerSettings } from "./setting";
-import { createOrUpdateViewer } from "./util";
+import { createOrUpdateViewer, getPath } from "./util";
 import { getDateFromFile } from "obsidian-daily-notes-interface";
+import { t } from "./translations/helper";
 
 export default class ViewerPlugin extends Plugin {
 	public settings: ViewerSettings;
@@ -25,7 +26,7 @@ export default class ViewerPlugin extends Plugin {
 
 		this.addRibbonIcon(
 			"calendar-glyph",
-			"Open Viewer",
+			t("Open Viewer"),
 			async (evt: MouseEvent) => {
 				this.openViewer();
 			}
@@ -33,7 +34,7 @@ export default class ViewerPlugin extends Plugin {
 
 		this.addCommand({
 			id: "open-viewer",
-			name: "Open Viewer",
+			name: t("Open Viewer"),
 			callback: () => {
 				this.openViewer();
 			},
@@ -68,18 +69,18 @@ export default class ViewerPlugin extends Plugin {
 		}
 	}
 
-	// 当开启插件后，自动创建 Viewer 文件
+	// 当开启插件时，自动创建 Viewer 文件
 	private async createFileOnLoad() {
 		await createOrUpdateViewer(this.app, this.settings);
 	}
 
 	// 当关闭插件时，自动删除 Viewer 文件
 	async onunload() {
-		const file = await this.app.vault.adapter.exists("Viewer.md");
-		if (!file) {
-			return;
+		let path = getPath(this.settings);
+		const isFile = await this.app.vault.adapter.exists(path);
+		if (isFile) {
+			await this.app.vault.adapter.remove(path);
 		}
-		await this.app.vault.adapter.remove("Viewer.md");
 	}
 
 	// 当设置改变时，自动更新 Viewer 内容
@@ -87,7 +88,7 @@ export default class ViewerPlugin extends Plugin {
 		await createOrUpdateViewer(this.app, this.settings);
 	}
 
-	// 支持监控文件变化，自动更新 Viewer 内容
+	// 当文件变化时，自动更新 Viewer 内容
 	registerFileMonitor() {
 		this.onFileCreated = this.onFileCreated.bind(this);
 		this.onFileDeleted = this.onFileDeleted.bind(this);
@@ -109,9 +110,8 @@ export default class ViewerPlugin extends Plugin {
 			leaf = this.app.workspace.getLeaf(false);
 		}
 
-		const viewer = this.app.vault.getAbstractFileByPath(
-			"Viewer.md"
-		) as TFile;
+		let path = getPath(this.settings);
+		let viewer = this.app.vault.getAbstractFileByPath(path) as TFile;
 		leaf.openFile(viewer);
 	};
 }

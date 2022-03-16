@@ -1,7 +1,7 @@
 {
 	"id": "obsidian-daily-notes-viewer",
 	"name": "Daily Notes Viewer",
-	"version": "0.1.4",
+	"version": "0.1.5",
 	"minAppVersion": "0.12.0",
 	"description": "Help you to review your daily notes like in roam research.",
 	"author": "Johnson0907",
