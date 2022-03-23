@@ -50,7 +50,11 @@ export const createOrUpdateViewer = async (
 			await app.vault.create(path, `${beginning}\n${fileText}`);
 			return;
 		} else {
-			await app.vault.modify(file, `${beginning}\n${fileText}`);
+			let contentOld = await app.vault.cachedRead(file);
+			let contentNew = `${beginning}\n${fileText}`;
+			if (contentNew !== contentOld) {
+				await app.vault.modify(file, `${beginning}\n${fileText}`);
+			}
 			return;
 		}
 	}
@@ -68,4 +72,12 @@ export const getPath = (setting: ViewerSettings) => {
 		path = `${folder}/${filename}.md`;
 	}
 	return path;
+};
+
+export const debounce = (fn: any, delay: number) => {
+	let timer: any;
+	return function (...args: any) {
+		if (timer) clearTimeout(timer);
+		timer = setTimeout(() => fn.apply(this, args), delay);
+	};
 };

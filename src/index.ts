@@ -11,7 +11,7 @@ import {
 	TFile,
 } from "obsidian";
 import { ViewerSettingTab, DEFAULT_SETTINGS, ViewerSettings } from "./setting";
-import { createOrUpdateViewer, getPath } from "./util";
+import { createOrUpdateViewer, getPath, debounce } from "./util";
 import { getDateFromFile } from "obsidian-daily-notes-interface";
 import { t } from "./translations/helper";
 
@@ -56,7 +56,7 @@ export default class ViewerPlugin extends Plugin {
 	private onFileCreated(file: TFile): void {
 		if (this.app.workspace.layoutReady) {
 			if (getDateFromFile(file, "day")) {
-				createOrUpdateViewer(this.app, this.settings);
+				debounce(createOrUpdateViewer(this.app, this.settings), 1000);
 			}
 		}
 	}
@@ -64,7 +64,7 @@ export default class ViewerPlugin extends Plugin {
 	private onFileDeleted(file: TFile): void {
 		if (this.app.workspace.layoutReady) {
 			if (getDateFromFile(file, "day")) {
-				createOrUpdateViewer(this.app, this.settings);
+				debounce(createOrUpdateViewer(this.app, this.settings), 1000);
 			}
 		}
 	}
