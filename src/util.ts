@@ -46,14 +46,14 @@ export const createOrUpdateViewer = async (
 	let filename = setting.Filename;
 	let file = app.vault.getAbstractFileByPath(path) as TFile;
 	if (!regex.test(filename)) {
+		let contentNew = `${beginning}\n${fileText}`;
 		if (file === null) {
-			await app.vault.create(path, `${beginning}\n${fileText}`);
+			await app.vault.create(path, contentNew);
 			return;
 		} else {
 			let contentOld = await app.vault.cachedRead(file);
-			let contentNew = `${beginning}\n${fileText}`;
 			if (contentNew !== contentOld) {
-				await app.vault.modify(file, `${beginning}\n${fileText}`);
+				await app.vault.modify(file, contentNew);
 			}
 			return;
 		}
@@ -72,12 +72,4 @@ export const getPath = (setting: ViewerSettings) => {
 		path = `${folder}/${filename}.md`;
 	}
 	return path;
-};
-
-export const debounce = (fn: any, delay: number) => {
-	let timer: any;
-	return function (...args: any) {
-		if (timer) clearTimeout(timer);
-		timer = setTimeout(() => fn.apply(this, args), delay);
-	};
 };

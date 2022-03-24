@@ -11,7 +11,7 @@ import {
 	TFile,
 } from "obsidian";
 import { ViewerSettingTab, DEFAULT_SETTINGS, ViewerSettings } from "./setting";
-import { createOrUpdateViewer, getPath, debounce } from "./util";
+import { createOrUpdateViewer, getPath } from "./util";
 import { getDateFromFile } from "obsidian-daily-notes-interface";
 import { t } from "./translations/helper";
 
@@ -56,7 +56,7 @@ export default class ViewerPlugin extends Plugin {
 	private onFileCreated(file: TFile): void {
 		if (this.app.workspace.layoutReady) {
 			if (getDateFromFile(file, "day")) {
-				debounce(createOrUpdateViewer(this.app, this.settings), 1000);
+				this.delayCreateOrUpdateViewer();
 			}
 		}
 	}
@@ -64,14 +64,14 @@ export default class ViewerPlugin extends Plugin {
 	private onFileDeleted(file: TFile): void {
 		if (this.app.workspace.layoutReady) {
 			if (getDateFromFile(file, "day")) {
-				debounce(createOrUpdateViewer(this.app, this.settings), 1000);
+				this.delayCreateOrUpdateViewer();
 			}
 		}
 	}
 
 	// 当开启插件时，自动创建 Viewer 文件
 	private async createFileOnLoad() {
-		await createOrUpdateViewer(this.app, this.settings);
+		this.delayCreateOrUpdateViewer();
 	}
 
 	// 当关闭插件时，自动删除 Viewer 文件
@@ -96,6 +96,14 @@ export default class ViewerPlugin extends Plugin {
 		this.registerEvent(this.app.vault.on("create", this.onFileCreated));
 		this.registerEvent(this.app.vault.on("delete", this.onFileDeleted));
 	}
+
+	delayCreateOrUpdateViewer = () => {
+		let timer: number = 0;
+		clearTimeout(timer);
+		timer = window.setTimeout(() => {
+			createOrUpdateViewer(this.app, this.settings);
+		}, 1000);
+	};
 
 	openViewer = async () => {
 		let leaf;
