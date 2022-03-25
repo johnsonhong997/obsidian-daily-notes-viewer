@@ -97,13 +97,18 @@ export default class ViewerPlugin extends Plugin {
 		this.registerEvent(this.app.vault.on("delete", this.onFileDeleted));
 	}
 
-	delayCreateOrUpdateViewer = () => {
-		let timer: number = 0;
-		clearTimeout(timer);
-		timer = window.setTimeout(() => {
-			createOrUpdateViewer(this.app, this.settings);
-		}, 1000);
-	};
+	debounce(fn: () => void, delay: number) {
+		let timer: any;
+		return function () {
+			if (timer) clearTimeout(timer);
+			timer = setTimeout(fn, delay);
+		};
+	}
+
+	delayCreateOrUpdateViewer = this.debounce(
+		() => createOrUpdateViewer(this.app, this.settings),
+		1000
+	);
 
 	openViewer = async () => {
 		let leaf;
