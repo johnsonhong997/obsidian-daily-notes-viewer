@@ -70,6 +70,14 @@ export default class ViewerPlugin extends Plugin {
 		}
 	}
 
+	private onFileRenamed(file: TFile): void {
+		if (this.app.workspace.layoutReady) {
+			if (getDateFromFile(file, "day")) {
+				this.delayCreateOrUpdateViewer();
+			}
+		}
+	}
+
 	// 当开启插件时，自动创建 Viewer 文件
 	private async createFileOnLoad() {
 		this.delayCreateOrUpdateViewer();
@@ -93,9 +101,11 @@ export default class ViewerPlugin extends Plugin {
 	registerFileMonitor() {
 		this.onFileCreated = this.onFileCreated.bind(this);
 		this.onFileDeleted = this.onFileDeleted.bind(this);
+		this.onFileRenamed = this.onFileRenamed.bind(this);
 
 		this.registerEvent(this.app.vault.on("create", this.onFileCreated));
 		this.registerEvent(this.app.vault.on("delete", this.onFileDeleted));
+		this.registerEvent(this.app.vault.on("rename", this.onFileRenamed));
 	}
 
 	delayCreateOrUpdateViewer = debounce(
