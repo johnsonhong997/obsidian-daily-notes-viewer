@@ -2,7 +2,7 @@
 
 This is a plugin for Obsidian (https://obsidian.md).
 
-It can help you review your daily notes like in roam research.
+It can help you to view some recent daily notes on one page.
 
 ### Demo
 
