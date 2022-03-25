@@ -9,6 +9,7 @@ import {
 	PluginSettingTab,
 	Setting,
 	TFile,
+	debounce,
 } from "obsidian";
 import { ViewerSettingTab, DEFAULT_SETTINGS, ViewerSettings } from "./setting";
 import { createOrUpdateViewer, getPath } from "./util";
@@ -97,17 +98,10 @@ export default class ViewerPlugin extends Plugin {
 		this.registerEvent(this.app.vault.on("delete", this.onFileDeleted));
 	}
 
-	debounce(fn: () => void, delay: number) {
-		let timer: any;
-		return function () {
-			if (timer) clearTimeout(timer);
-			timer = setTimeout(fn, delay);
-		};
-	}
-
-	delayCreateOrUpdateViewer = this.debounce(
+	delayCreateOrUpdateViewer = debounce(
 		() => createOrUpdateViewer(this.app, this.settings),
-		1000
+		1000,
+		true
 	);
 
 	openViewer = async () => {
