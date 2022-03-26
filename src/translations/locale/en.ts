@@ -42,6 +42,8 @@ export default {
 	Recent: "Recent",
 	Range: "Range",
 
+	"Filter Options:": "Filter Options:",
+
 	"Display Future Daily Notes": "Display Future Daily Notes",
 	"Display Future Daily Notes. (Default: OFF)":
 		"Display Future Daily Notes. (Default: OFF)",

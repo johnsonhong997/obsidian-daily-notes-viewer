@@ -189,6 +189,8 @@ export class ViewerSettingTab extends PluginSettingTab {
 					})
 			);
 
+		this.containerEl.createEl("p", { text: t("Filter Options:") });
+
 		// Recent 设置
 		const recent = containerEl.createEl("div", { cls: "recent-hide" });
 		recent.toggleClass(

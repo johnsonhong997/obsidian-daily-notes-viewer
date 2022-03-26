@@ -39,6 +39,8 @@ export default {
 	Recent: "最近",
 	Range: "范围",
 
+	"Filter Options:": "过滤器选项：",
+
 	"Display Future Daily Notes": "显示未来的日记",
 	"Display Future Daily Notes. (Default: OFF)":
 		"显示未来的日记。（默认：关闭）",
