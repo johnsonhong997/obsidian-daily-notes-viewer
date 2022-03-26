@@ -117,7 +117,7 @@ export default class ViewerPlugin extends Plugin {
 	openViewer = async () => {
 		let leaf;
 		await createOrUpdateViewer(this.app, this.settings);
-		if (this.settings.NewLeaf === true) {
+		if (this.settings.NewPane === true) {
 			if (this.app.workspace.activeLeaf.view instanceof MarkdownView) {
 				leaf = this.app.workspace.getLeaf(true);
 			} else {
