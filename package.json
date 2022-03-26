@@ -1,6 +1,6 @@
 {
 	"name": "obsidian-daily-notes-viewer",
-	"version": "0.1.6",
+	"version": "0.1.7",
 	"description": "Help you to view some recent daily notes on one page.",
 	"main": "main.js",
 	"scripts": {

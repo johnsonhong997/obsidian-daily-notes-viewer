@@ -7,14 +7,21 @@ export const createOrUpdateViewer = async (
 	setting: ViewerSettings
 ): Promise<void> => {
 	// 获取 daily notes 的 basename
-	let allDailyNotes: string[] = [];
-	for (let [string, TFile] of Object.entries(getAllDailyNotes())) {
-		allDailyNotes.push(TFile.basename);
+	let allDailyNotes = getAllDailyNotes();
+	let allDailyNotesKeys = Object.keys(allDailyNotes).sort().reverse();
+	let allDailyNotesSort: any = {};
+	for (let i = 0; i < allDailyNotesKeys.length; i++) {
+		allDailyNotesSort[allDailyNotesKeys[i]] =
+			allDailyNotes[allDailyNotesKeys[i]];
+	}
+	let allDailyNotesBasename: string[] = [];
+	for (let [string, TFile] of Object.entries(allDailyNotesSort)) {
+		allDailyNotesBasename.push(TFile.basename);
 	}
 
 	// 将 basename 转成链接
 	let links: string[] = [];
-	for (let dailyNote of allDailyNotes) {
+	for (let dailyNote of allDailyNotesBasename) {
 		let linkText: string;
 		linkText =
 			setting.Heading?.length > 0
@@ -24,7 +31,7 @@ export const createOrUpdateViewer = async (
 	}
 
 	let maximum = setting.Maximum;
-	links = links.sort().reverse().slice(0, maximum); // 对链接进行降序排序，设定数量
+	links = links.slice(0, maximum); // 对链接进行降序排序，设定数量
 
 	let fileText: string = "";
 	let lines = setting.Lines;
