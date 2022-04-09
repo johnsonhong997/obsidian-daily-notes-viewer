@@ -22,5 +22,4 @@ It can help you to view some recent daily notes on one page.
 ### Thanks
 
 -   Thanks to [Liam Cain](https://github.com/liamcain) for the [Obsidian Daily Notes interface](https://github.com/liamcain/obsidian-daily-notes-interface).
-
 -   Thanks to [Boninall](https://github.com/Quorafind) for adding some features.
